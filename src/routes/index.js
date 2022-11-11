@@ -4,8 +4,8 @@ import BlankLayout from "../layouts/BlankLayout";
 import MainLayout from "../layouts/MainLayout";
 import DetailPage from "../pages/DetailPage";
 import HomePage from "../pages/HomePage";
+import LoginPage from "../pages/LoginPage";
 import MoviePage from "../pages/MoviePage";
-// import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import AuthRequire from "./AuthRequire";
 
@@ -27,7 +27,7 @@ function Router() {
       </Route>
 
       <Route element={<BlankLayout />}>
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
