@@ -33,7 +33,6 @@ function PopularMovies() {
   }, []);
   return (
     <>
-      <Typography variant="h5">POPULAR </Typography>
       <Stack spacing={4} direction="row">
         <MovieList movies={movies.slice(2, 6)} />
       </Stack>

@@ -1,49 +1,3 @@
-// import {
-//   Box,
-//   Button,
-//   Checkbox,
-//   FormControlLabel,
-//   FormGroup,
-//   Stack,
-//   Typography,
-// } from "@mui/material";
-// import { FMultiCheckbox, FRadioGroup } from "./form";
-// import ClearAllIcon from "@mui/icons-material/ClearAll";
-// import useGenres from "../hooks/useGenres";
-// function MovieFilter({ resetFilter }) {
-//   const genres = useGenres();
-
-//   return (
-//     <Stack spacing={3} sx={{ p: 3, width: 250 }}>
-//       <Stack spacing={1}>
-//         <Typography variant="h6" sx={{ fontWeight: 600, color: "#E4D804" }}>
-//           Genres
-//         </Typography>
-//         <FMultiCheckbox
-//           name="genres"
-//           options={genres}
-//           sx={{ width: 1, color: "whitesmoke" }}
-//         />
-//       </Stack>
-
-//       <Box>
-//         <Button
-//           size="large"
-//           type="submit"
-//           color="inherit"
-//           variant="outlined"
-//           onClick={resetFilter}
-//           startIcon={<ClearAllIcon />}
-//         >
-//           Clear All
-//         </Button>
-//       </Box>
-//     </Stack>
-//   );
-// }
-
-// export default MovieFilter;
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
@@ -52,8 +6,10 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import useGenres from "../hooks/useGenres";
+import { Button } from "@mui/material";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
 
-export default function MovieFilter({ handleOnChange }) {
+export default function MovieFilter({ handleOnChange, resetFilter }) {
   const genres = useGenres();
 
   // const handleChange = (event) => {
@@ -70,13 +26,26 @@ export default function MovieFilter({ handleOnChange }) {
         sx={{ width: 1, color: "whitesmoke" }}
         variant="standard"
       >
-        <FormLabel component="legend">Genres</FormLabel>
+        <FormLabel component="legend">
+          Genres
+          <Box>
+            <Button
+              type="submit"
+              color="inherit"
+              variant="outlined"
+              onClick={resetFilter}
+              startIcon={<ClearAllIcon />}
+            >
+              Clear All
+            </Button>
+          </Box>
+        </FormLabel>
         <FormGroup>
           {genres.map((item) => (
             <FormControlLabel
               key={item.id}
               control={
-                <Checkbox value={item.id} onChange={(e) => handleOnChange} />
+                <Checkbox value={item.id} onChange={console.log("checked")} />
               }
               label={item.name}
             />

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Alert, Box, Container, Stack } from "@mui/material";
+import React from "react";
+import { Container } from "@mui/material";
 import PopularMovies from "../components/PopularMovies";
 import MovieLatest from "../components/MovieLatest";
 
@@ -10,6 +10,8 @@ function HomePage() {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
+        width: "100%",
+        margin: "10px auto",
       }}
     >
       <MovieLatest />

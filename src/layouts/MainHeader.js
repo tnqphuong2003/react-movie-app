@@ -63,7 +63,11 @@ function MainHeader() {
             spacing={4}
           >
             <Button
-              onClick={() => navigate(`/movies/top_rated`)}
+              onClick={() => {
+                localStorage.removeItem("search");
+                localStorage.removeItem("filter");
+                navigate(`/movies/top_rated`);
+              }}
               sx={{
                 my: 2,
                 color: "#e4d804",
@@ -74,7 +78,11 @@ function MainHeader() {
               Top rated
             </Button>
             <Button
-              onClick={() => navigate(`/movies/now_playing`)}
+              onClick={() => {
+                localStorage.removeItem("search");
+                localStorage.removeItem("filter");
+                navigate(`/movies/now_playing`);
+              }}
               sx={{
                 my: 2,
                 color: "#e4d804",
@@ -85,7 +93,12 @@ function MainHeader() {
               Now Playing
             </Button>
             <Button
-              onClick={() => navigate(`/movies/popular`)}
+              onClick={() => {
+                localStorage.removeItem("search");
+                localStorage.removeItem("filter");
+
+                navigate(`/movies/popular`);
+              }}
               sx={{
                 my: 2,
                 color: "#e4d804",

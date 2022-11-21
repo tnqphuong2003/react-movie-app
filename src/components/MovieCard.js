@@ -33,11 +33,11 @@ function MovieCard({ movie }) {
             <Rating value={3} size="small" />
             <Box
               style={{
-                border: "5px solid white",
+                border: "2px solid yellow",
                 borderRadius: "50%",
-                backgroundColor: "yellow",
-                width: "40px",
-                height: "40px",
+                backgroundColor: "black",
+                width: "50px",
+                height: "50px",
                 position: "absolute",
                 right: "10px",
                 bottom: "10px",
@@ -45,8 +45,9 @@ function MovieCard({ movie }) {
             >
               <div
                 style={{
+                  color: "yellow",
                   fontSize: "1.5rem",
-                  fontWeight: "bold",
+
                   position: "absolute",
                   left: "50%",
                   top: "50%",

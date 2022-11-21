@@ -1,17 +1,7 @@
-import {
-  Box,
-  Button,
-  Chip,
-  ImageList,
-  ImageListItem,
-  Rating,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Chip, Rating, Stack, Typography } from "@mui/material";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { IMAGE_URL } from "../app/config";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import useLatest from "../hooks/useLatest";
 import { useNavigate } from "react-router-dom";
 
@@ -31,12 +21,12 @@ function MovieLatest() {
   return (
     <Stack
       direction="row"
-      spacing={3}
+      spacing={1}
       sx={{
         width: "100%",
         height: "100vh",
-        margin: "auto",
-        padding: "50px",
+        margin: "0 auto",
+        paddingTop: "50px",
         bgcolor: "#000",
         backgroundImage: `url(${IMAGE_URL}${movie.backdrop_path})`,
         backgroundRepeat: "no-repeat",
@@ -55,7 +45,8 @@ function MovieLatest() {
           <Stack direction="row">
             <CalendarMonthIcon sx={{ color: "#E4D804" }} fontSize="small" />
             <Typography fontSize={14}>
-              {new Date(Date.parse(movie.release_date)).getFullYear()}
+              {movie.release_date}
+              {/* {new Date(movie.release_date).getFullYear()} */}
             </Typography>
           </Stack>
         </Stack>

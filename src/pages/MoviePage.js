@@ -20,8 +20,6 @@ import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
 import LoadingScreen from "../components/LoadingScreen";
 import MovieList from "../components/MovieList";
-import MovieFilter from "../components/MovieFilter";
-import MovieSearch from "../components/MovieSearch";
 import { API_KEY } from "../app/config";
 import { useParams } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -40,7 +38,11 @@ function MoviePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem("search") === null
+      ? ""
+      : localStorage.getItem("search")
+  );
   const [genreIds, setGenreIds] = useState([]);
 
   const params = useParams();
@@ -56,25 +58,16 @@ function MoviePage() {
     defaultValues,
   });
 
-  const handleOnChange = (e) => {
-    if (!genreIds.includes(e)) {
-      setGenreIds([...genreIds, e]);
-      console.log("check1", genresFilter);
-      setMovies(genresFilter);
-    } else {
-      setGenreIds(genreIds.filter((item) => e !== item));
-      console.log("check2", genresFilter);
-      setMovies(genresFilter);
-    }
-  };
-
   useEffect(() => {
     const getMovies = async () => {
       setLoading(true);
       try {
         console.log("searchQuery", searchQuery);
         const res = await apiService.get(
-          typeof searchQuery === "undefined" || searchQuery === ""
+          // typeof searchQuery === "undefined" || searchQuery === ""
+          searchQuery === null ||
+            searchQuery === "" ||
+            typeof searchQuery === "undefined"
             ? `/movie/${params.type}?api_key=${API_KEY}&language=en-US&page=${page}`
             : `/search/movie?query=${searchQuery}&api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false`
         );
@@ -92,16 +85,42 @@ function MoviePage() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <Container sx={{ display: "flex", minHeight: "100vh", mt: 3 }}>
-        <Stack>
+      <Container
+        sx={{
+          display: "flex",
+          minHeight: "100vh",
+          width: "100%",
+          margin: "auto",
+        }}
+      >
+        <Stack sx={{ width: "300px", margin: "24px 50px" }}>
           <FormProvider methods={methods}>
-            <Box sx={{ display: "flex" }}>
+            <Stack>
               <FormControl
                 component="fieldset"
                 sx={{ width: 1, color: "whitesmoke" }}
                 variant="standard"
               >
-                <FormLabel component="legend">Genres</FormLabel>
+                <FormLabel>
+                  <Stack spacing={1}>
+                    <Typography variant="h5" sx={{ color: "#e4d804" }}>
+                      Genres
+                    </Typography>
+                    {/* <Button
+                      color="inherit"
+                      variant="outlined"
+                      onClick={() => {
+                        localStorage.removeItem("search");
+                        localStorage.removeItem("filter");
+                        setSearchQuery("");
+                        setGenreIds([]);
+                      }}
+                      startIcon={<ClearAllIcon />}
+                    >
+                      Clear All
+                    </Button> */}
+                  </Stack>
+                </FormLabel>
                 <FormGroup>
                   {genres.map((item) => (
                     <FormControlLabel
@@ -110,17 +129,21 @@ function MoviePage() {
                         <Checkbox
                           value={item.id}
                           onChange={(e) => {
-                            console.log("check", genreIds);
                             let val = e.target.value;
                             if (!genreIds.includes(val)) {
                               setGenreIds([...genreIds, val]);
-                              console.log("check1", val);
+                              localStorage.setItem("filter", [
+                                ...genreIds,
+                                val,
+                              ]);
                               setMovies(genresFilter);
                             } else {
                               setGenreIds(
                                 genreIds.filter((item) => val !== item)
                               );
-                              console.log("check2", genreIds);
+                              if (genreIds.length === 1)
+                                localStorage.removeItem("filter");
+
                               setMovies(genresFilter);
                             }
                           }}
@@ -131,11 +154,10 @@ function MoviePage() {
                   ))}
                 </FormGroup>
               </FormControl>
-            </Box>
-            {/* <MovieFilter resetFilter={reset} /> */}
+            </Stack>
           </FormProvider>
         </Stack>
-        <Stack sx={{ flexGrow: 1 }}>
+        <Stack sx={{ flexGrow: 1, margin: "0 50px" }}>
           <Stack
             spacing={2}
             direction={{ xs: "column", sm: "row" }}
@@ -144,8 +166,16 @@ function MoviePage() {
             mb={2}
           >
             <TextField
+              value={searchQuery !== null ? searchQuery : ""}
               onChange={(e) => {
-                setSearchQuery(e.target.value);
+                let val = e.target.value;
+                if (val !== "") {
+                  localStorage.setItem("search", e.target.value);
+                  setSearchQuery(e.target.value);
+                } else {
+                  localStorage.removeItem("search");
+                  setSearchQuery("");
+                }
               }}
               sx={{ m: 1, width: "50ch", bgcolor: "black" }}
               InputProps={{

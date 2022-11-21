@@ -6,7 +6,6 @@ function useFilter(genreIds, page) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  console.log("useFilter", genreIds.join(","));
   useEffect(() => {
     const getResults = async () => {
       setLoading(true);
