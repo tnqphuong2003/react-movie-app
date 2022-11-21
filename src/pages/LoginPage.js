@@ -1,4 +1,10 @@
-import { Button, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  createTheme,
+  Stack,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FormProvider, FTextField } from "../components/form";
@@ -6,6 +12,12 @@ import useAuth from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string().required("Username is required"),
@@ -35,18 +47,20 @@ function LoginPage() {
   };
 
   return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3} sx={{ minWidth: "350px" }}>
-        <Typography variant="h4" textAlign="center">
-          Login
-        </Typography>
-        <FTextField name="username" label="Username" />
+    <ThemeProvider theme={darkTheme}>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={3} sx={{ minWidth: "350px" }}>
+          <Typography variant="h4" textAlign="center" color="whitesmoke">
+            Login
+          </Typography>
+          <FTextField name="username" label="Username" />
 
-        <Button type="submit" variant="contained">
-          Login
-        </Button>
-      </Stack>
-    </FormProvider>
+          <Button type="submit" variant="contained">
+            Login
+          </Button>
+        </Stack>
+      </FormProvider>
+    </ThemeProvider>
   );
 }
 
