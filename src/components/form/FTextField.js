@@ -10,6 +10,7 @@ function FTextField({ name, ...other }) {
       control={control}
       render={({ field, fieldState: { error } }) => (
         <TextField
+          onChange={(event) => field.onChange(event)}
           {...field}
           fullWidth
           error={!!error}

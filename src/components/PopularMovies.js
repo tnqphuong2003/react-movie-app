@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../app/apiService";
 import { API_KEY, IMAGE_URL } from "../app/config";
+import MovieList from "./MovieList";
 
 const page = 1;
 
@@ -34,51 +35,7 @@ function PopularMovies() {
     <>
       <Typography variant="h5">POPULAR </Typography>
       <Stack spacing={4} direction="row">
-        {movies.slice(0, 3).map((movie, index) => (
-          <Stack
-            direction="row"
-            key={index}
-            style={{
-              width: "400px",
-              display: "flex",
-              flexDirection: "row",
-              mr: "20px",
-              marginBottom: "5px",
-            }}
-          >
-            <Box
-              style={{
-                width: "50%",
-                height: "180px",
-              }}
-            >
-              <img
-                style={{
-                  width: "180px",
-                  objectFit: "cover",
-                }}
-                src={`${IMAGE_URL}${movie.backdrop_path}`}
-                srcSet={`${IMAGE_URL}${movie.backdrop_path}`}
-                alt={movie.title}
-                loading="lazy"
-                onClick={() => navigate(`/movie/${movie.id}`)}
-              />
-            </Box>
-            <Box
-              style={{
-                width: "50%",
-                height: "170px",
-                padding: "0 2 0px",
-                position: "relative",
-              }}
-            >
-              <Typography variant="h5" gutterBottom component="div" noWrap>
-                {movie.title}
-              </Typography>
-              <Typography fontSize={12}>{movie.release_date}</Typography>
-            </Box>
-          </Stack>
-        ))}
+        <MovieList movies={movies.slice(2, 6)} />
       </Stack>
     </>
   );

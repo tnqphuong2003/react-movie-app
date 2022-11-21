@@ -21,8 +21,7 @@ function Router() {
         }
       >
         <Route index element={<HomePage />} />
-        <Route index path="movie/" element={<MoviePage />} />
-
+        <Route path="movies/:type" element={<MoviePage />} />
         <Route path="movie/:id" element={<DetailPage />} />
       </Route>
 

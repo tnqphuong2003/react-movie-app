@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Box, Container, Stack } from "@mui/material";
-import { FormProvider } from "../components/form";
-import { useForm } from "react-hook-form";
-import apiService from "../app/apiService";
-import orderBy from "lodash/orderBy";
-import LoadingScreen from "../components/LoadingScreen";
-import TopRatedMovies from "../components/TopRatedMovies";
 import PopularMovies from "../components/PopularMovies";
+import MovieLatest from "../components/MovieLatest";
 
 function HomePage() {
   return (
@@ -15,10 +10,9 @@ function HomePage() {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        mt: 3,
       }}
     >
-      <TopRatedMovies />
+      <MovieLatest />
       <PopularMovies />
     </Container>
   );
